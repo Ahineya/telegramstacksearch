@@ -5,16 +5,27 @@ import (
 	"net/http"
 	"fmt"
 	"log"
+	"os"
 )
 
 func main() {
 	http.HandleFunc("/", index)
 
-	err := http.ListenAndServe(":9090", nil)
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "9090"
+	}
+
+	fmt.Println("Using port: ", port)
+
+	err := http.ListenAndServe(":" + port, nil)
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
+		os.Exit(1)
 	}
+
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
