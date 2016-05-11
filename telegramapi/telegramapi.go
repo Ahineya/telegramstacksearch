@@ -27,6 +27,14 @@ type ApiResult struct {
 	Result []Update `json:"result"`
 }
 
+func SetHook() error {
+	token := os.Getenv("BOT_TOKEN")
+	api_url := "https://api.telegram.org/bot" + token + "/"
+
+	_, err := http.Get(api_url + "setWebhook?url=https://telegramstacksearch.herokuapp.com/")
+	return err
+}
+
 func GetMessages() (*ApiResult, error) {
 	token := os.Getenv("BOT_TOKEN")
 	api_url := "https://api.telegram.org/bot" + token + "/"

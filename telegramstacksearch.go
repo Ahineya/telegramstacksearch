@@ -9,6 +9,7 @@ import (
 	"os"
 	"log"
 	"encoding/json"
+	//"github.com/Ahineya/telegramstacksearch/api"
 )
 
 func main() {
@@ -29,8 +30,13 @@ func main() {
 	}*/
 
 	//telegramapi.SendMessage(messages.Result[len(messages.Result) - 1].Message.Chat.Id, "Hello from GO")
+	err := telegramapi.SetHook()
+	if err != nil {
+		log.Fatal("Setting Hook: ", err)
+		os.Exit(1)
+	}
 
-	err := http.ListenAndServe(":" + port, nil)
+	err = http.ListenAndServe(":" + port, nil)
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
