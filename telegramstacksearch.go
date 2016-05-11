@@ -45,6 +45,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Fprintf(w, "something is broken")
 		} else {
+			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintf(w, response)
 		}
 	}
