@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"github.com/Ahineya/stacksearch/api"
+	"github.com/Ahineya/telegramstacksearch/api"
 	"net/http"
 	"fmt"
 	"log"
@@ -38,5 +38,15 @@ func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Form)
 	fmt.Println(r.URL.Path)
 
-	fmt.Fprintf(w, "It works!")
+	if len(r.Form["query"]) == 0 {
+		fmt.Fprintf(w, "It works! Specify the query GET parameter")
+	} else {
+		response, err := api.GetAnswer(r.Form["query"][0])
+		if err != nil {
+			fmt.Fprintf(w, "something is broken")
+		} else {
+			fmt.Fprintf(w, response)
+		}
+	}
+
 }
