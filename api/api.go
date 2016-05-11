@@ -60,7 +60,7 @@ func GetAnswer(query string) (string, error) {
 
 	answer := stackQuestionResponse.Items[0].Title + "\n\n" + string(stackAnswerResponse.Items[0].Body)
 
-	return answer, err
+	return answer, nil
 }
 
 func getStackOverflowQuestion(query string) (*StackQuestionResponse, error) {
@@ -79,7 +79,7 @@ func getStackOverflowQuestion(query string) (*StackQuestionResponse, error) {
 	var stackQuestionResponse StackQuestionResponse
 	err = json.Unmarshal(contents, &stackQuestionResponse)
 
-	return &stackQuestionResponse, err
+	return &stackQuestionResponse, nil
 }
 
 func getStackOverflowAnswer(answerId string) (*StackAnswerResponse, error) {
@@ -96,5 +96,5 @@ func getStackOverflowAnswer(answerId string) (*StackAnswerResponse, error) {
 	var stackAnswerResponse StackAnswerResponse
 	err = json.Unmarshal(contents, &stackAnswerResponse)
 
-	return &stackAnswerResponse, err
+	return &stackAnswerResponse, nil
 }
