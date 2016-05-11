@@ -1,0 +1,6 @@
+{
+	"ImportPath": "github.com/Ahineya/telegramstacksearch",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v66",
+	"Deps": []
+}
