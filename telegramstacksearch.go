@@ -79,7 +79,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 			telegramapi.SendMessage(t.Message.Chat.Id, "Help: Stackoverflow Search Bot!")
 		case "/lucky":
 			if len(args) > 0 {
-				response, err := api.GetAnswer(r.Form["query"][0])
+				response, err := api.GetAnswer(strings.Join(args, "%20"))
 				if err != nil {
 					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
 				} else {
