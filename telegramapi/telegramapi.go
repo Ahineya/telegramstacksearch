@@ -21,6 +21,7 @@ type TelegramMessage struct {
 type OutgoingTelegramMessage struct {
 	Text string `json:"text"`
 	ChatId int `json:"chat_id"`
+	ParseMode string `json:"parse_mode"`
 }
 
 type Update struct {
@@ -103,7 +104,7 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
-	a := OutgoingTelegramMessage{Text: response, ChatId: chatId}
+	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
 
 	b, err := json.Marshal(&a)
 	if err != nil {
