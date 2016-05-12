@@ -142,7 +142,7 @@ func PostMessage(response string, chatId int, mode string) {
 	}
 
 	if !result.Ok {
-		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: \n" + response + "\n" + result.Description + "\n", chatId, "")
+		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. \n\n\n Debug info: \n" + response + "\n" + result.Description + "\n", chatId, "")
 	}
 
 	//fmt.Println(result.Ok)
