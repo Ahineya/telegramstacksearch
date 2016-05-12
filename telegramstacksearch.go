@@ -53,9 +53,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(r.Form)
-	fmt.Println(r.URL.Path)
-
 	decoder := json.NewDecoder(r.Body)
 
 	var t telegramapi.Update

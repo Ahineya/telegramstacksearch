@@ -8,14 +8,17 @@ import (
 	"strconv"
 	"net/url"
 	"errors"
+	//"fmt"
 )
 
 const (
 	get_questions_url = "http://api.stackexchange.com/2.2/search?order=desc&sort=relevance&intitle={query}&site=stackoverflow"
+	get_all_answers_url = "https://api.stackexchange.com/2.2/questions/{question_id}/answers?order=desc&sort=votes&site=stackoverflow&filter=withbody"
 	get_answers_url = "https://api.stackexchange.com/2.2/answers/{answer_id}?site=stackoverflow&filter=withbody"
 )
 
 type StackQuestionItem struct {
+	QuestionId int `json:"question_id"`
 	AcceptedAnswerID int `json:"accepted_answer_id"`
 	Title string `json:"title"`
 }
@@ -48,8 +51,7 @@ func GetAnswer(query string) (string, error) {
 		return "", errors.New("Results not found for query: " + query)
 	}
 
-	answerId := strconv.Itoa(stackQuestionResponse.Items[0].AcceptedAnswerID)
-	stackAnswerResponse, err := getStackOverflowAnswer(answerId)
+	stackAnswerResponse, err := getStackOverflowBestAnswer(stackQuestionResponse.Items[0].QuestionId)
 	if err != nil {
 		return "", err
 	}
@@ -82,7 +84,25 @@ func getStackOverflowQuestion(query string) (*StackQuestionResponse, error) {
 	return &stackQuestionResponse, nil
 }
 
-func getStackOverflowAnswer(answerId string) (*StackAnswerResponse, error) {
+func getStackOverflowBestAnswer(questionId int) (*StackAnswerResponse, error) {
+	resp, err := http.Get(strings.Replace(get_all_answers_url, "{question_id}", strconv.Itoa(questionId), 1))
+	if err != nil {
+		return nil, err
+	}
+
+	contents, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var stackAnswerResponse StackAnswerResponse
+	err = json.Unmarshal(contents, &stackAnswerResponse)
+
+	return &stackAnswerResponse, nil
+}
+
+// Not used now
+func getStackOverflowAcceptedAnswer(answerId string) (*StackAnswerResponse, error) {
 	resp, err := http.Get(strings.Replace(get_answers_url, "{answer_id}", answerId, 1))
 	if err != nil {
 		return nil, err
