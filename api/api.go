@@ -21,6 +21,7 @@ type StackQuestionItem struct {
 	QuestionId int `json:"question_id"`
 	AcceptedAnswerID int `json:"accepted_answer_id"`
 	Title string `json:"title"`
+	Link string `json:"link"`
 }
 
 type StackAnswerItem struct {

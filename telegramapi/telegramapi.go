@@ -134,9 +134,13 @@ func PostMessage(response string, chatId int) {
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
 
+	var result ApiResult;
+	err = json.Unmarshal(body, &result)
+	if err != nil {
+		return
+	}
 
-
-	//fmt.Println(string(b))
+	fmt.Println(result.Ok)
 }
 
 func strip(str string, tag string) string {
