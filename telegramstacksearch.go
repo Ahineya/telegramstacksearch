@@ -10,6 +10,7 @@ import (
 	"log"
 	"encoding/json"
 	//"github.com/Ahineya/telegramstacksearch/api"
+	"strings"
 )
 
 func main() {
@@ -64,7 +65,23 @@ func index(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	fmt.Println(t.Message.Chat.Id)
+	//fmt.Println(t.Message.Chat.Id)
+
+	if t.Message.Text[0] == "/" {
+		tokens := strings.Fields(t.Message.Text)
+		command := tokens[0]
+		args := tokens[1:]
+
+		switch command {
+		case "/start":
+			telegramapi.SendMessage(t.Message.Chat.Id, "Welcome to Stackoverflow Search Bot!")
+		case "/help":
+			telegramapi.SendMessage(t.Message.Chat.Id, "Help: Stackoverflow Search Bot!")
+		default:
+			telegramapi.SendMessage(t.Message.Chat.Id, command + ":" + strings.Join(args, ","))
+		}
+
+	}
 
 	telegramapi.SendMessage(t.Message.Chat.Id, "Hello from GO")
 
