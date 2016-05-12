@@ -96,7 +96,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 					w.Header().Set("Content-Type", "application/json")
 					fmt.Fprintf(w, string(b))
 
-					fmt.Println(b)
+					fmt.Println(string(b))
 
 					/*encoder := json.NewEncoder(a)
 
