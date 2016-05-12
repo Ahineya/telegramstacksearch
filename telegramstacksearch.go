@@ -11,8 +11,6 @@ import (
 	"encoding/json"
 	"github.com/Ahineya/telegramstacksearch/api"
 	"strings"
-	"bytes"
-	"io/ioutil"
 )
 
 func main() {

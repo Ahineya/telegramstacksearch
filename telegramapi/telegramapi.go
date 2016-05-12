@@ -98,7 +98,7 @@ func SendMessage(chatId int, text string) (bool, error) {
 	return messages.Ok, nil
 }
 
-func PostMessage(response []byte, chatId int) {
+func PostMessage(response string, chatId int) {
 	a := OutgoingTelegramMessage{Text: response[0:4000], ChatId: chatId}
 
 	b, err := json.Marshal(&a)
