@@ -106,7 +106,9 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
-	response, err := sanitize.HTMLAllowing(response, []string{"b", "strong", "i", "em", "a", "code", "pre"})
+	response, err := sanitize.HTMLAllowing(response, []string{"b", "strong", "i", "em", "a", "code"})
+	response = replace(response, "<strong><em>", "<strong>")
+	response = replace(response, "</em></strong>", "</strong>")
 
 	fmt.Println(response)
 
@@ -141,6 +143,12 @@ func strip(str string, tag string) string {
 	r := regexp.MustCompile(tag)
 	fmt.Println(r)
 	return r.ReplaceAllString(str, "")
+}
+
+func replace(str string, tag string, replacer string) string {
+	r := regexp.MustCompile(tag)
+	fmt.Println(r)
+	return r.ReplaceAllString(str, replacer)
 }
 
 /*
