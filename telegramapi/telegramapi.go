@@ -105,13 +105,10 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
-	r := regexp.MustCompile("<p>")
-	fmt.Println(r)
-	response = r.ReplaceAllString(response, "")
-
-	r = regexp.MustCompile("</p>")
-	fmt.Println(r)
-	response = r.ReplaceAllString(response, "")
+	response = strip(response, "<p>")
+	response = strip(response, "</p>")
+	response = strip(response, "<div>")
+	response = strip(response, "</div>")
 
 
 	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
@@ -139,6 +136,12 @@ func PostMessage(response string, chatId int) {
 
 
 	//fmt.Println(string(b))
+}
+
+func strip(str string, tag string) string {
+	r := regexp.MustCompile(tag)
+	fmt.Println(r)
+	return r.ReplaceAllString(str, "")
 }
 
 /*
