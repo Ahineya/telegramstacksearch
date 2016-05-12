@@ -99,7 +99,11 @@ func SendMessage(chatId int, text string) (bool, error) {
 }
 
 func PostMessage(response string, chatId int) {
-	a := OutgoingTelegramMessage{Text: response[0:4000], ChatId: chatId}
+	if (len(response) > 4000) {
+		response = response[0:4000]
+	}
+
+	a := OutgoingTelegramMessage{Text: response, ChatId: chatId}
 
 	b, err := json.Marshal(&a)
 	if err != nil {
