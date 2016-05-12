@@ -83,7 +83,29 @@ func index(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
 				} else {
-					telegramapi.SendMessage(t.Message.Chat.Id, response)
+					//telegramapi.SendMessage(t.Message.Chat.Id, response)
+
+					a := &telegramapi.OutgoingTelegramMessage{Text: response, ChatId: t.Message.Chat.Id}
+
+					b, err := json.Marshal(a)
+					if err != nil {
+						fmt.Println(err)
+						return
+					}
+
+					w.Header().Set("Content-Type", "application/json")
+					w.Write(b)
+
+					/*encoder := json.NewEncoder(a)
+
+					var s string
+					err := encoder.Encode(&s)
+
+					if err != nil {
+						panic("this is not working")
+					}
+
+					fmt.Fprintf(w, s)*/
 				}
 			} else {
 				telegramapi.SendMessage(t.Message.Chat.Id, "Please, specify the search query")

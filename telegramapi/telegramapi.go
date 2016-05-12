@@ -17,6 +17,11 @@ type TelegramMessage struct {
 	     } `json:"chat"`
 }
 
+type OutgoingTelegramMessage struct {
+	Text string `json:"text"`
+	ChatId int `json:"chat_id"`
+}
+
 type Update struct {
 	Id int `json:"update_id"`
 	Message TelegramMessage `json:"message"`
