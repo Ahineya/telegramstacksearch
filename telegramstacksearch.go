@@ -64,10 +64,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&t)
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		return
 	}
-
-	//fmt.Println(t.Message.Chat.Id)
 
 	if string(t.Message.Text[0]) == "/" {
 		tokens := strings.Fields(t.Message.Text)
@@ -85,42 +84,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
 				} else {
-					//telegramapi.SendMessage(t.Message.Chat.Id, response)
-
-					a := &telegramapi.OutgoingTelegramMessage{Text: response[0:4000], ChatId: t.Message.Chat.Id}
-
-					b, err := json.Marshal(a)
-					if err != nil {
-						fmt.Println(err)
-						return
-					}
-
-					token := os.Getenv("BOT_TOKEN")
-					api_url := "https://api.telegram.org/bot" + token + "/sendMessage"
-
-					req, err := http.NewRequest("POST", api_url, bytes.NewBuffer(b))
-					req.Header.Set("Content-Type", "application/json")
-
-					client := &http.Client{}
-					resp, err := client.Do(req)
-
-					fmt.Println("response Status:", resp.Status)
-					fmt.Println("response Headers:", resp.Header)
-					body, _ := ioutil.ReadAll(resp.Body)
-					fmt.Println("response Body:", string(body))
-
-					fmt.Println(string(b))
-
-					/*encoder := json.NewEncoder(a)
-
-					var s string
-					err := encoder.Encode(&s)
-
-					if err != nil {
-						panic("this is not working")
-					}
-
-					fmt.Fprintf(w, s)*/
+					telegramapi.PostMessage(response, t.Message.Chat.Id)
 				}
 			} else {
 				telegramapi.SendMessage(t.Message.Chat.Id, "Please, specify the search query")
@@ -130,19 +94,5 @@ func index(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-
-	//telegramapi.SendMessage(t.Message.Chat.Id, "Hello from GO")
-
-	/*if len(r.Form["query"]) == 0 {
-		fmt.Fprintf(w, "It works! Specify the query GET parameter")
-	} else {
-		response, err := api.GetAnswer(r.Form["query"][0])
-		if err != nil {
-			fmt.Fprintf(w, "something is broken")
-		} else {
-			w.Header().Set("Content-Type", "text/html")
-			fmt.Fprintf(w, response)
-		}
-	}*/
 
 }

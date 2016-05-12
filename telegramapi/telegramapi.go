@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"net/url"
+	"bytes"
 )
 
 type TelegramMessage struct {
@@ -95,6 +96,32 @@ func SendMessage(chatId int, text string) (bool, error) {
 	}
 
 	return messages.Ok, nil
+}
+
+func PostMessage(response []byte, chatId int) {
+	a := OutgoingTelegramMessage{Text: response[0:4000], ChatId: chatId}
+
+	b, err := json.Marshal(&a)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	token := os.Getenv("BOT_TOKEN")
+	api_url := "https://api.telegram.org/bot" + token + "/sendMessage"
+
+	req, err := http.NewRequest("POST", api_url, bytes.NewBuffer(b))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	fmt.Println("response Status:", resp.Status)
+	fmt.Println("response Headers:", resp.Header)
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response Body:", string(body))
+
+	fmt.Println(string(b))
 }
 
 /*
