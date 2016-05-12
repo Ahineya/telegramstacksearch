@@ -67,7 +67,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Println(t.Message.Chat.Id)
 
-	if t.Message.Text[0] == "/" {
+	if string(t.Message.Text[0]) == "/" {
 		tokens := strings.Fields(t.Message.Text)
 		command := tokens[0]
 		args := tokens[1:]
