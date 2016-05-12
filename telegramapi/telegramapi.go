@@ -103,8 +103,8 @@ func SendMessage(chatId int, text string) (bool, error) {
 }
 
 func PostMessage(response string, chatId int, mode string) {
-	if (len(response) > 4000) {
-		response = response[0:4000]
+	if (len(response) > 3500) {
+		response = response[0:3500]
 	}
 
 	response, err := sanitize.HTMLAllowing(response, []string{"b", "strong", "i", "em", "a", "code"})
@@ -142,7 +142,7 @@ func PostMessage(response string, chatId int, mode string) {
 	}
 
 	if !result.Ok {
-		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: <pre>" + response + "\n" + result.Description + "</pre>", chatId, "")
+		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: \n" + response + "\n" + result.Description + "\n", chatId, "")
 	}
 
 	//fmt.Println(result.Ok)

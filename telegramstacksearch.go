@@ -79,7 +79,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
 				} else {
-					telegramapi.PostMessage(response, t.Message.Chat.Id, "")
+					telegramapi.PostMessage(response, t.Message.Chat.Id, "HTML")
 				}
 			} else {
 				telegramapi.SendMessage(t.Message.Chat.Id, "Please, specify the search query")
