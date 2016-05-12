@@ -106,7 +106,7 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
-	response = sanitize.HTMLAllowing(response, []string {"b", "strong", "i", "em", "a", "code", "pre"})
+	response, err := sanitize.HTMLAllowing(response, []string{"b", "strong", "i", "em", "a", "code", "pre"})
 
 	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
 
