@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"net/url"
 	"bytes"
+	"regexp"
 )
 
 type TelegramMessage struct {
@@ -104,6 +105,15 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
+	r := regexp.MustCompile("<p>")
+	fmt.Println(r)
+	response = r.ReplaceAllString(response, "")
+
+	r = regexp.MustCompile("</p>")
+	fmt.Println(r)
+	response = r.ReplaceAllString(response, "")
+
+
 	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
 
 	b, err := json.Marshal(&a)
@@ -126,7 +136,9 @@ func PostMessage(response string, chatId int) {
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
 
-	fmt.Println(string(b))
+
+
+	//fmt.Println(string(b))
 }
 
 /*
