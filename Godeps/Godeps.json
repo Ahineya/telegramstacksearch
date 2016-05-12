@@ -3,7 +3,7 @@
 	"GoVersion": "go1.6",
 	"GodepVersion": "v66",
 	"Packages": [
-		"github.com/kennygrant/sanitize"
+		"./..."
 	],
 	"Deps": [
 		{
