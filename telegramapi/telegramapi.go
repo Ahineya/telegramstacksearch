@@ -108,6 +108,8 @@ func PostMessage(response string, chatId int) {
 
 	response, err := sanitize.HTMLAllowing(response, []string{"b", "strong", "i", "em", "a", "code", "pre"})
 
+	fmt.Println(response)
+
 	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
 
 	b, err := json.Marshal(&a)
