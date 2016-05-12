@@ -58,7 +58,7 @@ func GetAnswer(query string) (string, error) {
 		return "", errors.New("Results not found for query: " + query)
 	}
 
-	answer := string(stackAnswerResponse.Items[0].Body)
+	answer := string(stackQuestionResponse.Items[0].Title + ":" + stackAnswerResponse.Items[0].Body)
 
 	return answer, nil
 }
