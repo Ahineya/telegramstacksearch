@@ -71,9 +71,24 @@ func index(w http.ResponseWriter, r *http.Request) {
 		switch command {
 		case "/start":
 			telegramapi.SendMessage(t.Message.Chat.Id, "Welcome to Stackoverflow Search Bot!")
+		case "/start@stacksearch_bot":
+			telegramapi.SendMessage(t.Message.Chat.Id, "Welcome to Stackoverflow Search Bot!")
 		case "/help":
 			telegramapi.SendMessage(t.Message.Chat.Id, "Help: Stackoverflow Search Bot!")
+		case "/help@stacksearch_bot":
+			telegramapi.SendMessage(t.Message.Chat.Id, "Help: Stackoverflow Search Bot!")
 		case "/search":
+			if len(args) > 0 {
+				response, err := api.GetAnswer(strings.Join(args, "%20"))
+				if err != nil {
+					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
+				} else {
+					telegramapi.PostMessage(response, t.Message.Chat.Id, "HTML")
+				}
+			} else {
+				telegramapi.SendMessage(t.Message.Chat.Id, "Please, specify the search query")
+			}
+		case "/search@stacksearch_bot":
 			if len(args) > 0 {
 				response, err := api.GetAnswer(strings.Join(args, "%20"))
 				if err != nil {

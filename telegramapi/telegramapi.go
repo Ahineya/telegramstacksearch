@@ -145,7 +145,6 @@ func PostMessage(response string, chatId int, mode string) {
 		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. \n\n\n Debug info: \n" + response + "\n" + result.Description + "\n", chatId, "")
 	}
 
-	//fmt.Println(result.Ok)
 }
 
 func strip(str string, tag string) string {
@@ -159,15 +158,3 @@ func replace(str string, tag string, replacer string) string {
 	fmt.Println(r)
 	return r.ReplaceAllString(str, replacer)
 }
-
-/*
-r = requests.get(URL + "?offset=%s" % (last + 1))
-	if r.status_code == 200:
-	for message in r.json()["result"]:
-	last = int(message["update_id"])
-	requests.post("http://localhost:8888/",
-		data=json.dumps(message),
-	headers={'Content-type': 'application/json',
-	'Accept': 'text/plain'}
-)
- */
