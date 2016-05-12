@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"bytes"
 	"regexp"
+	"github.com/kennygrant/sanitize"
 )
 
 type TelegramMessage struct {
@@ -105,11 +106,7 @@ func PostMessage(response string, chatId int) {
 		response = response[0:4000]
 	}
 
-	response = strip(response, "<p>")
-	response = strip(response, "</p>")
-	response = strip(response, "<div>")
-	response = strip(response, "</div>")
-
+	response = sanitize.HTMLAllowing(response, []string {"b", "strong", "i", "em", "a", "code", "pre"})
 
 	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
 

@@ -3,7 +3,21 @@
 	"GoVersion": "go1.6",
 	"GodepVersion": "v66",
 	"Packages": [
-		"./..."
+		"github.com/kennygrant/sanitize"
 	],
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/kennygrant/sanitize",
+			"Comment": "v1.0",
+			"Rev": "ce9fd1f6ce32afaa38b51feea32320fc8875e8e4"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "96dbb961a39ddccf16860cdd355bfa639c497f23"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "96dbb961a39ddccf16860cdd355bfa639c497f23"
+		}
+	]
 }
