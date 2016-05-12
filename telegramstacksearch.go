@@ -9,7 +9,7 @@ import (
 	"os"
 	"log"
 	"encoding/json"
-	//"github.com/Ahineya/telegramstacksearch/api"
+	"github.com/Ahineya/telegramstacksearch/api"
 	"strings"
 )
 
@@ -77,13 +77,24 @@ func index(w http.ResponseWriter, r *http.Request) {
 			telegramapi.SendMessage(t.Message.Chat.Id, "Welcome to Stackoverflow Search Bot!")
 		case "/help":
 			telegramapi.SendMessage(t.Message.Chat.Id, "Help: Stackoverflow Search Bot!")
+		case "/lucky":
+			if len(args) > 0 {
+				response, err := api.GetAnswer(r.Form["query"][0])
+				if err != nil {
+					telegramapi.SendMessage(t.Message.Chat.Id, "Got an error: " + err.Error())
+				} else {
+					telegramapi.SendMessage(t.Message.Chat.Id, response)
+				}
+			} else {
+				telegramapi.SendMessage(t.Message.Chat.Id, "Please, specify the search query")
+			}
 		default:
 			telegramapi.SendMessage(t.Message.Chat.Id, command + ":" + strings.Join(args, ","))
 		}
 
 	}
 
-	telegramapi.SendMessage(t.Message.Chat.Id, "Hello from GO")
+	//telegramapi.SendMessage(t.Message.Chat.Id, "Hello from GO")
 
 	/*if len(r.Form["query"]) == 0 {
 		fmt.Fprintf(w, "It works! Specify the query GET parameter")
