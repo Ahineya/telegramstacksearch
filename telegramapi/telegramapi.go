@@ -102,7 +102,7 @@ func SendMessage(chatId int, text string) (bool, error) {
 	return messages.Ok, nil
 }
 
-func PostMessage(response string, chatId int) {
+func PostMessage(response string, chatId int, mode string) {
 	if (len(response) > 4000) {
 		response = response[0:4000]
 	}
@@ -113,7 +113,7 @@ func PostMessage(response string, chatId int) {
 
 	fmt.Println(response)
 
-	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: "HTML"}
+	a := OutgoingTelegramMessage{Text: response, ChatId: chatId, ParseMode: mode}
 
 	b, err := json.Marshal(&a)
 	if err != nil {
@@ -142,7 +142,7 @@ func PostMessage(response string, chatId int) {
 	}
 
 	if !result.Ok {
-		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: <pre>" + result.Description + "</pre>", chatId)
+		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: <pre>" + response + "\n" + result.Description + "</pre>", chatId, "")
 	}
 
 	//fmt.Println(result.Ok)
