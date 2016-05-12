@@ -96,10 +96,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 					}
 
 					token := os.Getenv("BOT_TOKEN")
-					api_url := "https://api.telegram.org/bot" + token + "/"
+					api_url := "https://api.telegram.org/bot" + token + "/sendMessage"
 
 					req, err := http.NewRequest("POST", api_url, bytes.NewBuffer(b))
-					req.Header.Set("X-Custom-Header", "myvalue")
 					req.Header.Set("Content-Type", "application/json")
 
 					client := &http.Client{}
