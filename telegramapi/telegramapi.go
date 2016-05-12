@@ -34,6 +34,7 @@ type Update struct {
 type ApiResult struct {
 	Ok bool `json:"ok"`
 	Result []Update `json:"result"`
+	Description string `json:"description"`
 }
 
 func SetHook() error {
@@ -140,7 +141,11 @@ func PostMessage(response string, chatId int) {
 		return
 	}
 
-	fmt.Println(result.Ok)
+	if !result.Ok {
+		PostMessage("Some troubles with parsing answer HTML. Try another request till this will be fixed. Debug info: <pre>" + result.Description + "</pre>", chatId)
+	}
+
+	//fmt.Println(result.Ok)
 }
 
 func strip(str string, tag string) string {
