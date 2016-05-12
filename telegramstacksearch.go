@@ -11,6 +11,8 @@ import (
 	"encoding/json"
 	"github.com/Ahineya/telegramstacksearch/api"
 	"strings"
+	"bytes"
+	"io/ioutil"
 )
 
 func main() {
@@ -93,8 +95,20 @@ func index(w http.ResponseWriter, r *http.Request) {
 						return
 					}
 
-					w.Header().Set("Content-Type", "application/json")
-					fmt.Fprintf(w, string(b))
+					token := os.Getenv("BOT_TOKEN")
+					api_url := "https://api.telegram.org/bot" + token + "/"
+
+					req, err := http.NewRequest("POST", api_url, bytes.NewBuffer(b))
+					req.Header.Set("X-Custom-Header", "myvalue")
+					req.Header.Set("Content-Type", "application/json")
+
+					client := &http.Client{}
+					resp, err := client.Do(req)
+
+					fmt.Println("response Status:", resp.Status)
+					fmt.Println("response Headers:", resp.Header)
+					body, _ := ioutil.ReadAll(resp.Body)
+					fmt.Println("response Body:", string(body))
 
 					fmt.Println(string(b))
 
