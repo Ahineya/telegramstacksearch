@@ -87,7 +87,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 				} else {
 					//telegramapi.SendMessage(t.Message.Chat.Id, response)
 
-					a := &telegramapi.OutgoingTelegramMessage{Text: response, ChatId: t.Message.Chat.Id}
+					a := &telegramapi.OutgoingTelegramMessage{Text: response[0:4000], ChatId: t.Message.Chat.Id}
 
 					b, err := json.Marshal(a)
 					if err != nil {
